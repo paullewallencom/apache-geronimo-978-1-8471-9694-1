@@ -1,0 +1,26 @@
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1" 
+         xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2" 
+         xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" 
+         xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2">
+
+  <sys:environment>
+    <sys:moduleId>
+      <sys:groupId>com.packtpub.cust</sys:groupId>
+      <sys:artifactId>CustomerInfo</sys:artifactId>
+      <sys:version>1.0</sys:version>
+      <sys:type>car</sys:type>
+    </sys:moduleId>
+    <sys:dependencies>
+      <sys:dependency>
+          <sys:groupId>console.dbpool</sys:groupId>                
+          <sys:artifactId>DerbyTestPool</sys:artifactId>
+      </sys:dependency>
+    </sys:dependencies>
+  </sys:environment>
+
+  <context-root>/CustomerInfo</context-root>
+  <naming:resource-ref>
+    <naming:ref-name>jdbc/DataSource</naming:ref-name>
+    <naming:resource-link>DerbyTestPool</naming:resource-link>
+  </naming:resource-ref>
+</web-app>

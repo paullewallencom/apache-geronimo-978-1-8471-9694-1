@@ -1,0 +1,15 @@
+<projectDescription>
+  <name>LibraryApp-web</name>
+  <comment>Library App Web Module</comment>
+  <projects>
+    <project>LibraryApp-ejb</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

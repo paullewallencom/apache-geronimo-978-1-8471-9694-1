@@ -1,0 +1,30 @@
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1" 
+         xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2" 
+         xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" 
+         xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2">
+
+  <sys:environment>
+    <sys:moduleId>
+      <sys:groupId>com.pactpub.jms</sys:groupId>
+      <sys:artifactId>jmssample</sys:artifactId>
+      <sys:version>1.0</sys:version>
+      <sys:type>car</sys:type>
+    </sys:moduleId>
+    <sys:dependencies/>
+  </sys:environment>
+
+  <context-root>/Chat</context-root>
+  <nam:resource-ref>
+        <nam:ref-name>jms/ChatConnectionFactory</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>console.jms</nam:groupId>
+            <nam:artifactId>Sample RA</nam:artifactId>
+            <nam:version>1.0</nam:version>
+            <nam:name>SampleConnectionFactory</nam:name>
+        </nam:pattern>
+    </nam:resource-ref>
+    <nam:resource-env-ref>
+        <nam:ref-name>jms/ChatTopic</nam:ref-name>
+    <message-destination-link>SampleTopic</message-destination-link>    
+    </nam:resource-env-ref>
+</web-app>

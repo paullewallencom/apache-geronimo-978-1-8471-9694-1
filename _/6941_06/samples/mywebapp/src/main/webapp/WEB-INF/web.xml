@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="MyWebApp" version="2.5"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>MyWebApp</display-name>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <!-- For 'BASIC', realm-name will be shown in the prompt -->
+        <realm-name>packt-properties-realm</realm-name>
+    </login-config>
+
+    <!-- Security roles used in the application -->
+    <security-role><role-name>admin</role-name></security-role>
+    <security-role><role-name>user</role-name></security-role>
+
+    <!-- Configure authorization for Admin pages -->    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <!-- Configure authorization for User pages -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>User</web-resource-name>
+            <url-pattern>/user/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+</web-app>

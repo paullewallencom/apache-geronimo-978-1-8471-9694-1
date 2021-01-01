@@ -1,0 +1,10 @@
+<projectDescription>
+  <name>JMSSample-ear</name>
+  <comment>JMS Sample EAR</comment>
+  <projects>
+    <project>JMSSample-client</project>
+    <project>JMSSample-web</project>
+  </projects>
+  <buildSpec/>
+  <natures/>
+</projectDescription>

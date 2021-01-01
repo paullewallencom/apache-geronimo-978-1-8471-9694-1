@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+    <dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <dep:moduleId>
+            <dep:groupId>packt-samples</dep:groupId>
+            <dep:artifactId>mycorbaejbwebapp</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>war</dep:type>
+        </dep:moduleId>
+        <dep:dependencies>
+            <dep:dependency>
+                <dep:groupId>packt-samples</dep:groupId>
+                <dep:artifactId>mycorbaejbapp</dep:artifactId>
+                <dep:version>1.0</dep:version>
+                <dep:type>jar</dep:type>
+            </dep:dependency>
+        </dep:dependencies>
+    </dep:environment>
+    <context-root>mycorbaejbwebapp</context-root>
+    <nam:ejb-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>ejb/MyService</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>packt-samples</nam:groupId>
+            <nam:artifactId>mycorbaejbapp</nam:artifactId>
+            <nam:version>1.0</nam:version>
+            <nam:name>MySessionBean</nam:name>
+        </nam:pattern>
+    </nam:ejb-ref>
+
+    <nam:ejb-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>ejb/MyCorbaService</nam:ref-name>
+        <nam:ns-corbaloc>corbaloc::localhost:1050/NameService</nam:ns-corbaloc>
+        <nam:name>ejb/MySessionBean</nam:name>
+        <!--nam:css-link>NoSecurity</nam:css-link-->
+        <nam:css-link>SSLWithUsernamePassword</nam:css-link>
+    </nam:ejb-ref>
+
+    <nam:ejb-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>ejb/MyCorbaService2</nam:ref-name>
+        <nam:ns-corbaloc>corbaloc::localhost:1050/NameService</nam:ns-corbaloc>
+        <nam:name>ejb/MySessionBean</nam:name>
+        <!--nam:css-link>NoSecurity</nam:css-link-->
+        <nam:css-link>SSLWithDynamicUsernamePassword</nam:css-link>
+    </nam:ejb-ref>
+
+    <security-realm-name>packt-properties-realm</security-realm-name>
+    <app:security xsi:type="sec:securityType" xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" xmlns:app="http://geronimo.apache.org/xml/ns/j2ee/application-2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <sec:role-mappings>
+            <sec:role role-name="customer">
+                <sec:principal name="User" class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"/>
+            </sec:role>
+            <sec:role role-name="bank">
+                <sec:principal name="Admin" class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"/>
+            </sec:role>
+        </sec:role-mappings>
+    </app:security>
+
+<!-- 
+      <dep:gbean name="NoSecurity" class="org.apache.geronimo.corba.CSSBeanGBean"   xsi:type="dep:gbeanType" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dep:reference name="TransactionManager">
+          <dep:name>TransactionManager</dep:name>
+        </dep:reference>
+        <dep:reference name="ConfigAdapter">
+          <dep:name>ORBConfigAdapter</dep:name>
+        </dep:reference>
+        <dep:attribute name="description">NoSecurity</dep:attribute>
+        <dep:xml-attribute name="cssConfig">
+          <css:css xmlns:css="http://openejb.apache.org/xml/ns/corba-css-config-2.1">
+            <css:compoundSecMechTypeList>
+              <css:compoundSecMech>
+                <css:SSL>
+                  <css:supports>Integrity Confidentiality EstablishTrustInTarget EstablishTrustInClient</css:supports>
+                  <css:requires/>
+                </css:SSL>
+              </css:compoundSecMech>
+            </css:compoundSecMechTypeList>
+          </css:css>
+        </dep:xml-attribute>
+      </dep:gbean>
+-->
+      
+      <dep:gbean name="SSLWithUsernamePassword" class="org.apache.geronimo.corba.CSSBean"  xsi:type="dep:gbeanType" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dep:reference name="TransactionManager">
+          <dep:name>TransactionManager</dep:name>
+        </dep:reference>
+        <dep:reference name="ConfigAdapter">
+          <dep:name>ORBConfigAdapter</dep:name>
+        </dep:reference>
+        <dep:reference name="SSLConfig">
+          <dep:name>CORBASSLConfig</dep:name>
+        </dep:reference>
+        <dep:attribute name="description">SSLWithUsernamePassword</dep:attribute>
+        <dep:xml-attribute name="cssConfig">
+          <css:css xmlns:css="http://openejb.apache.org/xml/ns/corba-css-config-2.1">
+            <css:compoundSecMechTypeList>
+              <css:compoundSecMech>
+                <css:SSL>
+                  <css:supports>Integrity Confidentiality EstablishTrustInClient</css:supports>
+                  <css:requires>Integrity Confidentiality</css:requires>
+                </css:SSL>
+                <css:GSSUPStatic username="packtadmin" password="admin" domain="packt-properties-realm"/>
+                <css:sasMech>
+                  <css:ITTAbsent/>
+                </css:sasMech>
+              </css:compoundSecMech>
+            </css:compoundSecMechTypeList>
+          </css:css>
+        </dep:xml-attribute>
+      </dep:gbean>
+
+      <dep:gbean name="SSLWithDynamicUsernamePassword" class="org.apache.geronimo.corba.CSSBean"  xsi:type="dep:gbeanType" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dep:reference name="TransactionManager">
+          <dep:name>TransactionManager</dep:name>
+        </dep:reference>
+        <dep:reference name="ConfigAdapter">
+          <dep:name>ORBConfigAdapter</dep:name>
+        </dep:reference>
+        <dep:reference name="SSLConfig">
+          <dep:name>CORBASSLConfig</dep:name>
+        </dep:reference>
+        <dep:attribute name="description">SSLWithDynamicUsernamePassword</dep:attribute>
+        <dep:xml-attribute name="cssConfig">
+          <css:css xmlns:css="http://openejb.apache.org/xml/ns/corba-css-config-2.1">
+            <css:compoundSecMechTypeList>
+              <css:compoundSecMech>
+                <css:SSL>
+                  <css:supports>Integrity Confidentiality EstablishTrustInClient</css:supports>
+                  <css:requires>Integrity Confidentiality</css:requires>
+                </css:SSL>
+                <css:GSSUPDynamic domain="packt-properties-realm"/>
+                <css:sasMech>
+                  <css:ITTAbsent/>
+                </css:sasMech>
+              </css:compoundSecMech>
+            </css:compoundSecMechTypeList>
+          </css:css>
+        </dep:xml-attribute>
+      </dep:gbean>
+      
+</web-app>

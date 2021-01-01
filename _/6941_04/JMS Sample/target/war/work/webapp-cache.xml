@@ -1,0 +1,16 @@
+<webapp-structure>
+  <registeredFiles>
+    <entry>
+      <string>currentBuild</string>
+      <path-set>
+        <pathsSet class="linked-hash-set">
+          <string>chat.html</string>
+          <string>messages.jsp</string>
+          <string>WEB-INF/geronimo-web.xml</string>
+          <string>WEB-INF/classes/com/pactpub/jms/JMSServlet$1.class</string>
+          <string>WEB-INF/classes/com/pactpub/jms/JMSServlet.class</string>
+        </pathsSet>
+      </path-set>
+    </entry>
+  </registeredFiles>
+</webapp-structure>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+    <dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <dep:moduleId>
+            <dep:groupId>packt-samples</dep:groupId>
+            <dep:artifactId>myejbwebapp</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>war</dep:type>
+        </dep:moduleId>
+        <dep:dependencies>
+            <dep:dependency>
+                <dep:groupId>packt-samples</dep:groupId>
+                <dep:artifactId>myejbapp</dep:artifactId>
+                <dep:version>1.0</dep:version>
+                <dep:type>jar</dep:type>
+            </dep:dependency>
+        </dep:dependencies>
+    </dep:environment>
+    <context-root>myejbwebapp</context-root>
+    <nam:ejb-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>ejb/MyService</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>packt-samples</nam:groupId>
+            <nam:artifactId>myejbapp</nam:artifactId>
+            <nam:version>1.0</nam:version>
+            <nam:name>MySessionBean</nam:name>
+        </nam:pattern>
+    </nam:ejb-ref>
+    <nam:ejb-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>ejb/MyEjb3Service</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>packt-samples</nam:groupId>
+            <nam:artifactId>myejbapp</nam:artifactId>
+            <nam:version>1.0</nam:version>
+            <nam:name>MyEjb3ServiceBean</nam:name>
+        </nam:pattern>
+    </nam:ejb-ref>
+    <nam:ejb-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>ejb/MyEjb3Service2</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>packt-samples</nam:groupId>
+            <nam:artifactId>myejbapp</nam:artifactId>
+            <nam:version>1.0</nam:version>
+            <nam:name>MyEjb3ServiceBean2</nam:name>
+        </nam:pattern>
+    </nam:ejb-ref>
+    <nam:ejb-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>ejb/MyEjb3Service3</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>packt-samples</nam:groupId>
+            <nam:artifactId>myejbapp</nam:artifactId>
+            <nam:version>1.0</nam:version>
+            <nam:name>MyEjb3ServiceBean3</nam:name>
+        </nam:pattern>
+    </nam:ejb-ref>
+    <security-realm-name>packt-properties-realm</security-realm-name>
+    <app:security xsi:type="sec:securityType" xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" xmlns:app="http://geronimo.apache.org/xml/ns/j2ee/application-2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <sec:credential-store-ref>
+            <name xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">SampleCredentialStore</name>
+        </sec:credential-store-ref>
+        <sec:role-mappings>
+            <sec:role role-name="customer">
+		        <sec:run-as-subject>
+				    <sec:realm>packt-properties-realm</sec:realm>
+				    <sec:id>packtuser2-subject</sec:id>
+		        </sec:run-as-subject>
+                <sec:principal name="User" class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"/>
+            </sec:role>
+            <sec:role role-name="bank">
+                <sec:principal name="Admin" class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"/>
+            </sec:role>
+        </sec:role-mappings>
+    </app:security>
+    <dep:gbean name="SampleCredentialStore" class="org.apache.geronimo.security.credentialstore.SimpleCredentialStoreImpl"  xsi:type="dep:gbeanType" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dep:xml-attribute name="credentialStore">
+            <credential-store xmlns="http://geronimo.apache.org/xml/ns/credentialstore-1.0">
+                <realm name="packt-properties-realm">
+                    <subject>
+                        <id>packtuser1-subject</id>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</type>
+                            <value>packtuser1</value>
+                        </credential>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</type>
+                            <value>user1</value>
+                        </credential>
+                    </subject>
+                    <subject>
+                        <id>packtuser2-subject</id>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</type>
+                            <value>packtuser2</value>
+                        </credential>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</type>
+                            <value>user2</value>
+                        </credential>
+                    </subject>
+                    <subject>
+                        <id>packtadmin-subject</id>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</type>
+                            <value>packtadmin</value>
+                        </credential>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</type>
+                            <value>admin</value>
+                        </credential>
+                    </subject>
+                </realm>
+            </credential-store>
+        </dep:xml-attribute>
+    </dep:gbean>    
+</web-app>

@@ -1,0 +1,37 @@
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-1.2">
+    <environment>
+        <moduleId>
+            <groupId>com.pact.plugins</groupId>
+            <artifactId>WorldClockView</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </moduleId>
+        
+        <dependencies>
+            <dependency> 
+                <groupId>org.apache.geronimo.plugins</groupId>
+                <artifactId>pluto-support</artifactId>
+                <type>car</type>
+            </dependency>
+            <dependency> 
+                <groupId>com.pact.plugins</groupId>
+                <artifactId>WorldClock</artifactId>
+                <type>car</type>
+            </dependency>
+            
+        </dependencies>
+    </environment>
+    
+    <!-- This is where the files are accessed from. (aka - portletContext) -->
+    <context-root>/WorldClockPortlet</context-root>
+    
+    <!-- Start off a ACEGBean, this is the lifecycle for the portlet -->
+    <gbean name="PlutoTest" class="org.apache.geronimo.pluto.AdminConsoleExtensionGBean">
+        <attribute name="pageTitle">World Clock</attribute>
+        <attribute name="portletContext">/WorldClockPortlet</attribute>
+        <attribute name="portletList">[WorldClockPortlet]</attribute>
+        <reference name="PortalContainerServices">
+	  <name>PlutoPortalServices</name>
+        </reference>
+    </gbean>
+</web-app>

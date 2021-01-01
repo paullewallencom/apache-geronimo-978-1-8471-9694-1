@@ -1,0 +1,42 @@
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1" 
+         xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2" 
+         xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" 
+         xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2">
+
+  <sys:environment>
+    <sys:moduleId>
+      <sys:groupId>com.packtpub.hello</sys:groupId>
+      <sys:artifactId>HelloWorldSLF4J</sys:artifactId>
+      <sys:version>1.0</sys:version>
+      <sys:type>car</sys:type>
+    </sys:moduleId>
+    <sys:dependencies>
+      <sys:dependency>
+          <sys:groupId>log4j</sys:groupId>
+          <sys:artifactId>log4j</sys:artifactId>          
+          <sys:type>jar</sys:type>
+      </sys:dependency>
+      <sys:dependency>
+          <sys:groupId>org.slf4j</sys:groupId>
+          <sys:artifactId>slf4j-api</sys:artifactId>
+          <sys:type>jar</sys:type>
+       </sys:dependency>
+      <sys:dependency>
+          <sys:groupId>org.slf4j</sys:groupId>
+          <sys:artifactId>slf4j-log4j12</sys:artifactId>
+          <sys:type>jar</sys:type>
+       </sys:dependency>    
+    </sys:dependencies> 
+    
+    <sys:hidden-classes>
+        <filter>org.apache.log4j</filter>
+        <filter>org.slf4j</filter>
+  	    <filter>log4j</filter>
+    </sys:hidden-classes> 
+    
+    <sys:non-overridable-classes/>
+  </sys:environment>
+
+  <context-root>/HelloWorldSLF4J</context-root>
+
+</web-app>

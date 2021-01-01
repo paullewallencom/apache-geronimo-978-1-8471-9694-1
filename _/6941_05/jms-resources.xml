@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+    
+    http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+            <dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+                <dep:moduleId>
+                    <dep:groupId>packt-samples</dep:groupId>
+                    <dep:artifactId>jms-resources</dep:artifactId>
+                    <dep:version>1.0</dep:version>
+                    <dep:type>rar</dep:type>
+                </dep:moduleId>
+                <dep:dependencies>
+                    <dep:dependency>
+                        <dep:groupId>org.apache.geronimo.configs</dep:groupId>
+                        <dep:artifactId>activemq-broker</dep:artifactId>
+                        <dep:type>car</dep:type>
+                    </dep:dependency>
+                </dep:dependencies>
+            </dep:environment>
+            <resourceadapter>
+                <resourceadapter-instance>
+                    <resourceadapter-name>jms-resources</resourceadapter-name>
+                    <nam:workmanager xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+                        <nam:gbean-link>DefaultWorkManager</nam:gbean-link>
+                    </nam:workmanager>
+                </resourceadapter-instance>
+                <outbound-resourceadapter>
+                    <connection-definition>
+                        <connectionfactory-interface>javax.jms.ConnectionFactory</connectionfactory-interface>
+                        <connectiondefinition-instance>
+                            <name>TestConnectionFactory</name>
+                            <implemented-interface>javax.jms.QueueConnectionFactory</implemented-interface>
+                            <implemented-interface>javax.jms.TopicConnectionFactory</implemented-interface>
+                            <connectionmanager>
+                                <xa-transaction>
+                                    <transaction-caching/>
+                                </xa-transaction>
+                                <single-pool>
+                                    <match-one/>
+                                </single-pool>
+                            </connectionmanager>
+                        </connectiondefinition-instance>
+                    </connection-definition>
+                </outbound-resourceadapter>
+            </resourceadapter>
+            <adminobject>
+                <adminobject-interface>javax.jms.Queue</adminobject-interface>
+                <adminobject-class>org.apache.activemq.command.ActiveMQQueue</adminobject-class>
+                <adminobject-instance>
+                    <message-destination-name>TestQueue</message-destination-name>
+                    <config-property-setting name="PhysicalName">TestQueue</config-property-setting>
+                </adminobject-instance>
+            </adminobject>
+            <adminobject>
+                <adminobject-interface>javax.jms.Topic</adminobject-interface>
+                <adminobject-class>org.apache.activemq.command.ActiveMQTopic</adminobject-class>
+            </adminobject>
+ </connector>

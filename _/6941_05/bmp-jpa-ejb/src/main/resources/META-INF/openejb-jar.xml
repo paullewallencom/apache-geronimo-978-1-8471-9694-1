@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openejb-jar xmlns="http://openejb.apache.org/xml/ns/openejb-jar-2.2" 
+ xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2" 
+ xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" 
+ xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2">
+ 
+ <sys:environment>
+  <sys:moduleId>
+   <sys:groupId>packt.samples</sys:groupId>
+   <sys:artifactId>bmp-jpa-ejb</sys:artifactId>
+   <sys:version>2.0</sys:version>
+   <sys:type>jar</sys:type>
+  </sys:moduleId>
+
+  <dependencies>
+   <dependency>
+    <groupId>console.dbpool</groupId>
+    <artifactId>LibraryDS</artifactId>
+    <type>rar</type>
+   </dependency>
+  </dependencies>
+
+ </sys:environment>
+ <enterprise-beans/>
+ </openejb-jar>
+

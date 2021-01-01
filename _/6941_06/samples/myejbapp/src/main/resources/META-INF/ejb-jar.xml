@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar id="MyEjbApp" version="2.1" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd">
+    <display-name>MyEjbApp</display-name>
+    <enterprise-beans>
+        <session>
+            <description>My Session Bean</description>
+            <display-name>MySessionBean</display-name>
+            <ejb-name>MySessionBean</ejb-name>
+            <home>simple.ejb21.MyServiceHome</home>
+            <remote>simple.ejb21.MyService</remote>
+            <local-home>simple.ejb21.MyServiceLocalHome</local-home>
+            <local>simple.ejb21.MyServiceLocal</local>
+            <ejb-class>simple.ejb21.MyServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <security-identity>
+                <use-caller-identity />
+            </security-identity>
+        </session>
+    </enterprise-beans>
+    <assembly-descriptor>
+        <security-role>
+            <description>User role</description>
+            <role-name>ejbuser</role-name>
+        </security-role>
+        <security-role>
+            <description>Administrator role</description>
+            <role-name>ejbadmin</role-name>
+        </security-role>
+        <method-permission>
+            <role-name>ejbuser</role-name>
+            <method>
+                <ejb-name>MySessionBean</ejb-name>
+                <method-name>userMethod</method-name>
+            </method>
+        </method-permission>
+        <method-permission>
+            <role-name>ejbadmin</role-name>
+            <method>
+                <ejb-name>MySessionBean</ejb-name>
+                <method-name>adminMethod</method-name>
+            </method>
+        </method-permission>
+        <method-permission>
+            <unchecked/>
+            <method>
+                <ejb-name>MySessionBean</ejb-name>
+                <method-name>commonMethod</method-name>
+            </method>
+        </method-permission>
+        <method-permission>
+            <role-name/>
+            <method>
+                <ejb-name>MySessionBean</ejb-name>
+                <method-name>noaccessMethod</method-name>
+            </method>
+        </method-permission>
+    </assembly-descriptor>
+</ejb-jar>

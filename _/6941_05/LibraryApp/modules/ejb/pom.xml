@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.packtpub.deployment</groupId>
+		<artifactId>LibraryApp</artifactId>
+		<version>1.0</version>
+	</parent>
+	<groupId>com.packtpub.deployment</groupId>
+	<artifactId>LibraryApp-ejb</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0</version>
+	<name>Library Application :: EJB Module</name>
+	<description>
+        Library App EJB Module
+    </description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-ejb_3.0_spec</artifactId>
+			<version>1.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-annotation_1.0_spec</artifactId>
+			<version>1.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-javamail_1.4_spec</artifactId>
+			<version>1.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jaxws_2.1_spec</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
+			<version>1.1.2</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<configuration>
+					<generateClient>true</generateClient>
+					<archive>
+						<manifestEntries>
+							<Class-Path>wsappclient.jar</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.axis2.maven2</groupId>
+				<artifactId>axis2-java2wsdl-maven-plugin</artifactId>
+				<configuration>
+					<className>com.packtpub.library.ejb.MailBusinessRemote</className>
+					<targetNamespace>http://ejb.library.packt.com</targetNamespace>
+					<serviceName>MailService</serviceName>
+					<outputFileName>../ear/src/main/resources/META-INF/wsdl/MailService.wsdl</outputFileName>
+					<requiresDependencyResolution>compile</requiresDependencyResolution>
+				</configuration>
+				<executions>
+					<execution>
+					    <phase>process-classes</phase>
+					    <configuration><requiresDependencyResolution>compile</requiresDependencyResolution></configuration>					     
+						<goals>
+							<goal>java2wsdl</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>  
+
+		</plugins>
+	</build>
+
+</project>

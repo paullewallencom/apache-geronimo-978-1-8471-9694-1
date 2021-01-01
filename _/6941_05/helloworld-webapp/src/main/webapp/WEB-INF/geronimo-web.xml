@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+    <dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <dep:moduleId>
+            <dep:groupId>com.packtpub.samples</dep:groupId>
+            <dep:artifactId>helloworld-webapp</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>war</dep:type>
+        </dep:moduleId>
+        <dep:dependencies>
+			<dep:dependency>
+				<dep:groupId>packt-samples</dep:groupId>
+				<dep:artifactId>jms-resources</dep:artifactId>
+				<dep:type>rar</dep:type>
+			</dep:dependency>
+        </dep:dependencies>
+    </dep:environment>
+    <context-root>helloworld</context-root>
+    <nam:resource-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>jms/TestConnectionFactory</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>packt-samples</nam:groupId>
+            <nam:artifactId>jms-resources</nam:artifactId>
+            <nam:name>TestConnectionFactory</nam:name>
+        </nam:pattern>
+    </nam:resource-ref>    
+    <nam:resource-env-ref xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+        <nam:ref-name>jms/TestQueue</nam:ref-name>
+        <nam:pattern>
+            <nam:groupId>packt-samples</nam:groupId>
+            <nam:artifactId>jms-resources</nam:artifactId>
+            <nam:name>TestQueue</nam:name>
+        </nam:pattern>
+    </nam:resource-env-ref>    
+</web-app>
+
+

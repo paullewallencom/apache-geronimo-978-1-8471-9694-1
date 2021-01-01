@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb:openejb-jar xmlns:app="http://geronimo.apache.org/xml/ns/j2ee/application-2.0" xmlns:client="http://geronimo.apache.org/xml/ns/j2ee/application-client-2.0" xmlns:conn="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:ejb="http://openejb.apache.org/xml/ns/openejb-jar-2.2" xmlns:name="http://geronimo.apache.org/xml/ns/naming-1.2" xmlns:pers="http://java.sun.com/xml/ns/persistence" xmlns:pkgen="http://openejb.apache.org/xml/ns/pkgen-2.1" xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" xmlns:web="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+    <dep:environment>
+        <dep:moduleId>
+            <dep:groupId>packt-samples</dep:groupId>
+            <dep:artifactId>mycorbaejbapp</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>jar</dep:type>
+        </dep:moduleId>
+        <dep:dependencies/>
+        <dep:hidden-classes/>
+        <dep:non-overridable-classes/>
+    </dep:environment>
+    <ejb:enterprise-beans>
+        <ejb:session>
+            <ejb:ejb-name>MySessionBean</ejb:ejb-name>
+            <ejb:jndi-name>ejb/MySessionBean</ejb:jndi-name>
+            <!--ejb:tss-link>IdentityTokenNoSecurity</ejb:tss-link-->
+            <ejb:tss-link>SSLWithUsernamePassword</ejb:tss-link>
+        </ejb:session>
+    </ejb:enterprise-beans>
+    <sec:security>
+        <sec:role-mappings>
+            <sec:role role-name="ejbuser">
+                <sec:principal class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" name="User"/>
+            </sec:role>
+            <sec:role role-name="ejbadmin">
+                <sec:principal class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" name="Admin"/>
+            </sec:role>
+        </sec:role-mappings>
+    </sec:security>
+
+<!-- 
+      <dep:gbean name="IdentityTokenNoSecurity" class="org.apache.geronimo.corba.TSSBean">
+        <dep:attribute name="POAName">IdentityTokenNoSecurity</dep:attribute>
+        <dep:reference name="Server">
+          <dep:name>UnprotectedServer</dep:name>
+        </dep:reference>
+        <dep:xml-attribute name="tssConfig">
+          <tss:tss xmlns:tss="http://openejb.apache.org/xml/ns/corba-tss-config-2.1" xmlns:sec="http://geronimo.apache.org/xml/ns/security-1.2">
+            <tss:compoundSecMechTypeList>
+              <tss:compoundSecMech>
+                <tss:sasMech>
+                  <tss:identityTokenTypes>
+                    <tss:ITTAnonymous/>
+                    <tss:ITTPrincipalNameGSSUP principal-class="org.apache.geronimo.security.realm.providers.GeronimoUserPrincipal"/>
+                    <tss:ITTDistinguishedName/>
+                    <tss:ITTX509CertChain/>
+                  </tss:identityTokenTypes>
+                </tss:sasMech>
+              </tss:compoundSecMech>
+            </tss:compoundSecMechTypeList>
+          </tss:tss>
+        </dep:xml-attribute>
+      </dep:gbean>
+-->
+
+      <dep:gbean name="SSLWithUsernamePassword" class="org.apache.geronimo.corba.TSSBean">
+        <dep:attribute name="POAName">SSLWithUsernamePassword</dep:attribute>
+        <dep:reference name="Server">
+          <dep:name>Server</dep:name>
+        </dep:reference>
+        <dep:xml-attribute name="tssConfig">
+          <tss:tss xmlns:tss="http://openejb.apache.org/xml/ns/corba-tss-config-2.1" xmlns:sec="http://geronimo.apache.org/xml/ns/security-1.2">
+            <tss:SSL port="2001" hostname="localhost">
+              <tss:supports>Integrity Confidentiality EstablishTrustInTarget</tss:supports>
+              <tss:requires>Integrity Confidentiality</tss:requires>
+            </tss:SSL>
+            <tss:compoundSecMechTypeList>
+              <tss:compoundSecMech>
+                <tss:GSSUP required="true" targetName="packt-properties-realm"/>
+                <tss:sasMech>
+                  <tss:identityTokenTypes>
+                    <tss:ITTAbsent/>
+                  </tss:identityTokenTypes>
+                </tss:sasMech>
+              </tss:compoundSecMech>
+            </tss:compoundSecMechTypeList>
+          </tss:tss>
+        </dep:xml-attribute>
+      </dep:gbean>
+</ejb:openejb-jar>

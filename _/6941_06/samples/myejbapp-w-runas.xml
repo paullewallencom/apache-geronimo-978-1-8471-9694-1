@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb:openejb-jar xmlns:app="http://geronimo.apache.org/xml/ns/j2ee/application-2.0" xmlns:client="http://geronimo.apache.org/xml/ns/j2ee/application-client-2.0" xmlns:conn="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:ejb="http://openejb.apache.org/xml/ns/openejb-jar-2.2" xmlns:name="http://geronimo.apache.org/xml/ns/naming-1.2" xmlns:pers="http://java.sun.com/xml/ns/persistence" xmlns:pkgen="http://openejb.apache.org/xml/ns/pkgen-2.1" xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0" xmlns:web="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+    <dep:environment>
+        <dep:moduleId>
+            <dep:groupId>packt-samples</dep:groupId>
+            <dep:artifactId>myejbapp</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>jar</dep:type>
+        </dep:moduleId>
+        <dep:dependencies/>
+        <dep:hidden-classes/>
+        <dep:non-overridable-classes/>
+    </dep:environment>
+    <ejb:enterprise-beans>
+        <ejb:session>
+            <ejb:ejb-name>MySessionBean</ejb:ejb-name>
+            <ejb:jndi-name>ejb/MySessionBean</ejb:jndi-name>
+        </ejb:session>
+    </ejb:enterprise-beans>
+    <sec:security>
+        <sec:credential-store-ref>
+            <name xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">SampleCredentialStore</name>
+        </sec:credential-store-ref>
+        <sec:default-subject>
+            <sec:realm>SampleSecurityRealm</sec:realm>
+            <sec:id>packtuser1-subject</sec:id>
+        </sec:default-subject>
+        <sec:role-mappings>
+            <sec:role role-name="ejbuser">
+                <sec:principal class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" name="User"/>
+            </sec:role>
+            <sec:role role-name="ejbadmin">
+                <sec:principal class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" name="Admin"/>
+            </sec:role>
+            <sec:role role-name="ejb3user">
+		        <sec:run-as-subject>
+				    <sec:realm>SampleSecurityRealm</sec:realm>
+				    <sec:id>packtuser3-subject</sec:id>
+		        </sec:run-as-subject>
+                <sec:principal class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" name="User"/>
+            </sec:role>
+            <sec:role role-name="ejb3admin">
+                <sec:principal class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" name="Admin"/>
+                <sec:principal class="org.apache.geronimo.security.realm.providers.GeronimoUserPrincipal" name="packtuser3"/>
+            </sec:role>
+        </sec:role-mappings>
+    </sec:security>
+    <dep:gbean name="SampleCredentialStore" class="org.apache.geronimo.security.credentialstore.SimpleCredentialStoreImpl"  xsi:type="dep:gbeanType" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dep:xml-attribute name="credentialStore">
+            <credential-store xmlns="http://geronimo.apache.org/xml/ns/credentialstore-1.0">
+                <realm name="packt-properties-realm">
+                    <subject>
+                        <id>packtuser1-subject</id>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</type>
+                            <value>packtuser1</value>
+                        </credential>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</type>
+                            <value>user1</value>
+                        </credential>
+                    </subject>
+                    <subject>
+                        <id>packtuser2-subject</id>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</type>
+                            <value>packtuser2</value>
+                        </credential>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</type>
+                            <value>user2</value>
+                        </credential>
+                    </subject>
+                    <subject>
+                        <id>packtuser3-subject</id>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</type>
+                            <value>packtuser3</value>
+                        </credential>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</type>
+                            <value>user3</value>
+                        </credential>
+                    </subject>
+                    <subject>
+                        <id>dwadmin-subject</id>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</type>
+                            <value>packtadmin</value>
+                        </credential>
+                        <credential>
+                            <type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</type>
+                            <value>admin</value>
+                        </credential>
+                    </subject>
+                </realm>
+            </credential-store>
+        </dep:xml-attribute>
+    </dep:gbean>    
+</ejb:openejb-jar>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+version="2.4">
+<servlet>
+  <servlet-name>PopulateDBServlet</servlet-name>
+  <servlet-class>com.packtpub.library.PopulateDBServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>ListServlet</servlet-name>
+  <servlet-class>com.packtpub.library.ListServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>PopulateDBServlet</servlet-name>
+  <url-pattern>/SetupDB</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>ListServlet</servlet-name>
+  <url-pattern>/list</url-pattern>
+</servlet-mapping>
+
+<welcome-file-list>
+    <welcome-file>list</welcome-file>
+</welcome-file-list>
+</web-app>

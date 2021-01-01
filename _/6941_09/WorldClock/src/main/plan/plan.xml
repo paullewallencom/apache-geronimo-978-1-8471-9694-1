@@ -1,0 +1,17 @@
+<module xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">
+  <environment>
+    <moduleId>
+      <groupId>com.pact.plugins</groupId>
+      <artifactId>WorldClock</artifactId>
+      <version>1.0</version>
+      <type>car</type>
+    </moduleId>
+    <dependencies/>          
+    <hidden-classes/>
+    <non-overridable-classes/>
+    <private-classes/>
+  </environment>
+  <gbean name="ClockGBean" class="com.pact.plugins.ClockGBean">
+    <attribute name="name">ClockGBean</attribute>
+  </gbean>
+</module>

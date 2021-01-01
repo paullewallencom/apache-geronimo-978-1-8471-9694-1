@@ -1,0 +1,10 @@
+<projectDescription>
+  <name>JDBCSample-ear</name>
+  <comment>JDBC Sample EAR</comment>
+  <projects>
+    <project>JDBCSample-client</project>
+    <project>JDBCSample-web</project>
+  </projects>
+  <buildSpec/>
+  <natures/>
+</projectDescription>

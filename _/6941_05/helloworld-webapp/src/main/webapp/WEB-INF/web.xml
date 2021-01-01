@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+version="2.4">
+
+
+  <display-name>Helloworld Web Sample</display-name>
+
+  <servlet>
+     <servlet-name>HelloworldServlet</servlet-name>
+     <servlet-class>sample.HelloworldServlet</servlet-class>
+     <init-param>
+         <param-name>greeting</param-name>
+         <param-value>Namaskar</param-value>
+     </init-param>
+  </servlet>
+
+  <servlet-mapping>
+     <servlet-name>HelloworldServlet</servlet-name>
+     <url-pattern>/HelloworldServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+     <servlet-name>HelloworldServlet</servlet-name>
+     <url-pattern>/HelloworldServlet2</url-pattern>
+  </servlet-mapping>
+
+
+  <filter>
+      <filter-name>HelloworldFilter</filter-name>
+      <filter-class>sample.HelloworldFilter</filter-class>
+      <init-param>
+          <param-name>param1</param-name>
+          <param-value>Aloha</param-value>
+      </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>HelloworldFilter</filter-name>
+      <url-pattern>/HelloworldServlet</url-pattern>
+  </filter-mapping>
+
+  <listener>
+      <listener-class>sample.HelloworldServletContextListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>sample.HelloworldServletContextAttributeListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>sample.HelloworldServletRequestListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>sample.HelloworldServletRequestAttributeListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>sample.HelloworldHttpSessionListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>sample.HelloworldHttpSessionAttributeListener</listener-class>
+  </listener>
+
+  <env-entry>
+      <env-entry-name>const/myEnvEntry</env-entry-name>
+      <env-entry-type>java.lang.String</env-entry-type>
+      <env-entry-value>India</env-entry-value>
+  </env-entry>
+
+  <welcome-file-list id="WelcomeFileList">
+    <welcome-file>hello.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>

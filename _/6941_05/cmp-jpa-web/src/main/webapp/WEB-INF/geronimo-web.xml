@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+    <dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <dep:moduleId>
+            <dep:groupId>packt.samples</dep:groupId>
+            <dep:artifactId>cmp-ejb-web</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>war</dep:type>
+        </dep:moduleId>
+        <dep:dependencies>
+			<dep:dependency>
+				<dep:groupId>packt.samples</dep:groupId>
+				<dep:artifactId>cmp-jpa-ejb</dep:artifactId>
+				<dep:type>jar</dep:type>
+			</dep:dependency>
+        </dep:dependencies>
+    </dep:environment>
+    <context-root>library</context-root>
+</web-app>
+
+

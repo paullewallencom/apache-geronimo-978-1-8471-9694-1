@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0">
+    <dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <dep:moduleId>
+            <dep:groupId>packt-samples</dep:groupId>
+            <dep:artifactId>MyWebApp</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>war</dep:type>
+        </dep:moduleId>
+        <dep:dependencies>
+            <dep:dependency>
+                <dep:groupId>console.realm</dep:groupId>
+                <dep:artifactId>packt-properties-realm</dep:artifactId>
+                <dep:version>1.0</dep:version>
+                <dep:type>car</dep:type>
+            </dep:dependency>
+        </dep:dependencies>
+    </dep:environment>
+    <context-root>mywebapp</context-root>
+    <security-realm-name>packt-properties-realm</security-realm-name>
+    <security>
+        <role-mappings>
+            <role role-name="admin">
+                <principal name="Admin" class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"/>
+            </role>
+            <role role-name="user">
+                <principal name="User" class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"/>
+                <principal name="vamsi" class="org.apache.geronimo.security.realm.providers.GeronimoUserPrincipal"/>
+            </role>
+        </role-mappings>
+    </security>
+</web-app>

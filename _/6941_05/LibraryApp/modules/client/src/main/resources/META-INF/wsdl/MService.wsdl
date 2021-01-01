@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:axis2="http://ejb.library.packt.com" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://ejb.library.packtpub.com/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://ejb.library.packt.com">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ejb.library.packtpub.com/xsd">
+<xs:element name="sendMailFault">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="sendMailFault" type="xs:anyType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sendMailMessage">
+  </wsdl:message>
+  <wsdl:message name="sendMailFault">
+    <wsdl:part element="ns:sendMailFault" name="part1">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MailServicePortType">
+    <wsdl:operation name="sendMail">
+      <wsdl:input message="axis2:sendMailMessage">
+    </wsdl:input>
+      <wsdl:fault message="axis2:sendMailFault" name="sendMailFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MailServiceSOAP11Binding" type="axis2:MailServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sendMail">
+      <soap:operation soapAction="urn:sendMail" style="document"/>
+      <wsdl:input>
+        <soap:body namespace="http://ejb.library.packt.com" use="literal"/>
+      </wsdl:input>
+      <wsdl:fault name="sendMailFault">
+    <soap:body namespace="http://ejb.library.packt.com" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MailServiceSOAP12Binding" type="axis2:MailServicePortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sendMail">
+      <soap12:operation soapAction="urn:sendMail" style="document"/>
+      <wsdl:input>
+        <soap12:body namespace="http://ejb.library.packt.com" use="literal"/>
+      </wsdl:input>
+      <wsdl:fault name="sendMailFault">
+    <soap12:body namespace="http://ejb.library.packt.com" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MailService">
+    <wsdl:port binding="axis2:MailServiceSOAP11Binding" name="MailServiceSOAP11port">
+      <soap:address location="http://localhost:8080/Mail/MailService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

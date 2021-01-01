@@ -1,0 +1,50 @@
+<module xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">
+    <environment>
+        <moduleId>
+            <groupId>packt-samples</groupId>
+            <artifactId>mygbean</artifactId>
+            <version>1.0</version>
+            <type>car</type>
+        </moduleId>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.geronimo.framework</groupId>
+                <artifactId>j2ee-system</artifactId>
+                <type>car</type>
+            </dependency>
+            <dependency>
+                <groupId>packt-samples</groupId>
+                <artifactId>gbean-sample</artifactId>
+                <type>jar</type>
+            </dependency>
+        </dependencies>
+    </environment>
+    <gbean name="mysamplegbean" class="packtsamples.MySampleGBean" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <attribute name="name">mysamplegbean</attribute>
+        <attribute name="name2">mysmplgbn</attribute>
+        <reference name="ServerInfo">
+            <name>ServerInfo</name>
+        </reference>
+    </gbean>
+    <gbean name="mysamplegbean2" class="packtsamples.MySampleGBean" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <attribute name="name">mysamplegbean2</attribute>
+        <reference name="ServerInfo">
+            <name>ServerInfo</name>
+        </reference>
+    </gbean>
+    <gbean name="mysamplegbean3" class="packtsamples.MySampleGBean" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <attribute name="name">mysamplegbean3</attribute>
+        <reference name="ServerInfo">
+            <name>ServerInfo</name>
+        </reference>
+        <dependency>
+            <name>mysamplegbean4</name>
+        </dependency>
+    </gbean>
+    <gbean name="mysamplegbean4" class="packtsamples.MySampleGBean" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <attribute name="name">mysamplegbean4</attribute>
+        <reference name="ServerInfo">
+            <name>ServerInfo</name>
+        </reference>
+    </gbean>
+</module>

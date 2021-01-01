@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://geronimo.apache.org/xml/ns/j2ee/application-2.0">
+  <environment>
+    <moduleId>
+      <groupId>com.pactpub.jms</groupId>
+      <artifactId>JMSSampleApp</artifactId>
+      <version>1.0</version>
+      <type>car</type>
+    </moduleId>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.geronimo.configs</groupId>
+        <artifactId>activemq-broker</artifactId>
+        <type>car</type>
+      </dependency>
+    </dependencies>
+  </environment>
+  <module>
+    <web>JMSSample-web-1.0.war</web>
+    <web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+      <context-root>/Chat</context-root>
+      <resource-ref>
+        <ref-name>jms/ChatConnectionFactory</ref-name>
+        <pattern>
+          <name>SampleConnectionFactory</name>
+        </pattern>
+      </resource-ref>
+      <resource-env-ref>
+        <ref-name>jms/ChatTopic</ref-name>
+        <message-destination-link>SampleTopic</message-destination-link>
+      </resource-env-ref>
+    </web-app>
+  </module>
+  <module>
+    <java>JMSSample-client-1.0.jar</java>
+    <application-client xmlns="http://geronimo.apache.org/xml/ns/j2ee/application-client-2.0">
+      <client-environment xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <moduleId>
+          <groupId>com.pactpub.jms</groupId>
+          <artifactId>JMSSample-client</artifactId>
+          <version>1.0</version>
+          <type>car</type>
+        </moduleId>
+      </client-environment>
+      <server-environment xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <moduleId>
+          <groupId>com.pactpub.jms</groupId>
+          <artifactId>JDBCSample-client-server</artifactId>
+          <version>1.0</version>
+          <type>car</type>
+        </moduleId>
+      </server-environment>
+      <resource-ref>
+        <ref-name>jms/ChatConnectionFactory</ref-name>
+        <pattern>
+          <name>SampleConnectionFactory</name>
+        </pattern>
+      </resource-ref>
+      <resource-env-ref>
+        <ref-name>jms/ChatTopic</ref-name>
+        <message-destination-link>SampleTopic</message-destination-link>
+      </resource-env-ref>
+      <resource>
+        <external-rar xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+          <dep:groupId>org.apache.geronimo.modules</dep:groupId>
+          <dep:artifactId>geronimo-activemq-ra</dep:artifactId>
+          <dep:type>rar</dep:type>
+        </external-rar>
+        <connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+          <resourceadapter>
+            <resourceadapter-instance>
+              <resourceadapter-name>Sample RA</resourceadapter-name>
+              <config-property-setting name="Password">manager</config-property-setting>
+              <config-property-setting name="UserName">system</config-property-setting>
+              <nam:workmanager xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+                <nam:gbean-link>DefaultWorkManager</nam:gbean-link>
+              </nam:workmanager>
+            </resourceadapter-instance>
+            <outbound-resourceadapter>
+              <connection-definition>
+                <connectionfactory-interface>javax.jms.ConnectionFactory</connectionfactory-interface>
+                <connectiondefinition-instance>
+                  <name>SampleConnectionFactory</name>
+                  <implemented-interface>javax.jms.TopicConnectionFactory</implemented-interface>
+                  <connectionmanager>
+                    <xa-transaction>
+                      <transaction-caching/>
+                    </xa-transaction>
+                    <single-pool>
+                      <match-one/>
+                    </single-pool>
+                  </connectionmanager>
+                </connectiondefinition-instance>
+              </connection-definition>
+            </outbound-resourceadapter>
+          </resourceadapter>
+          <adminobject>
+            <adminobject-interface>javax.jms.Topic</adminobject-interface>
+            <adminobject-class>org.apache.activemq.command.ActiveMQTopic</adminobject-class>
+            <adminobject-instance>
+              <message-destination-name>SampleTopic</message-destination-name>
+              <config-property-setting name="PhysicalName">SampleTopic</config-property-setting>
+            </adminobject-instance>
+          </adminobject>
+          <adminobject>
+            <adminobject-interface>javax.jms.Queue</adminobject-interface>
+            <adminobject-class>org.apache.activemq.command.ActiveMQQueue</adminobject-class>
+          </adminobject>
+        </connector>
+      </resource>
+    </application-client>
+  </module>
+  <ext-module>
+    <connector>SampleRA</connector>
+    <external-path xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+      <dep:groupId>org.apache.geronimo.modules</dep:groupId>
+      <dep:artifactId>geronimo-activemq-ra</dep:artifactId>
+      <dep:type>rar</dep:type>
+    </external-path>
+    <connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+      <resourceadapter>
+        <resourceadapter-instance>
+          <resourceadapter-name>Sample RA</resourceadapter-name>
+          <config-property-setting name="Password">manager</config-property-setting>
+          <config-property-setting name="UserName">system</config-property-setting>
+          <nam:workmanager xmlns:nam="http://geronimo.apache.org/xml/ns/naming-1.2">
+            <nam:gbean-link>DefaultWorkManager</nam:gbean-link>
+          </nam:workmanager>
+        </resourceadapter-instance>
+        <outbound-resourceadapter>
+          <connection-definition>
+            <connectionfactory-interface>javax.jms.ConnectionFactory</connectionfactory-interface>
+            <connectiondefinition-instance>
+              <name>SampleConnectionFactory</name>
+              <implemented-interface>javax.jms.TopicConnectionFactory</implemented-interface>
+              <connectionmanager>
+                <xa-transaction>
+                  <transaction-caching/>
+                </xa-transaction>
+                <single-pool>
+                  <match-one/>
+                </single-pool>
+              </connectionmanager>
+            </connectiondefinition-instance>
+          </connection-definition>
+        </outbound-resourceadapter>
+      </resourceadapter>
+      <adminobject>
+        <adminobject-interface>javax.jms.Topic</adminobject-interface>
+        <adminobject-class>org.apache.activemq.command.ActiveMQTopic</adminobject-class>
+        <adminobject-instance>
+          <message-destination-name>SampleTopic</message-destination-name>
+          <config-property-setting name="PhysicalName">SampleTopic</config-property-setting>
+        </adminobject-instance>
+      </adminobject>
+      <adminobject>
+        <adminobject-interface>javax.jms.Queue</adminobject-interface>
+        <adminobject-class>org.apache.activemq.command.ActiveMQQueue</adminobject-class>
+      </adminobject>
+    </connector>
+  </ext-module>
+</application>

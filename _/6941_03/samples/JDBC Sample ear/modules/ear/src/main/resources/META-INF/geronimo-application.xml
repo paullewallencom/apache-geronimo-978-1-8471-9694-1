@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application xmlns="http://geronimo.apache.org/xml/ns/j2ee/application-2.0">
+    <environment>
+        <moduleId>
+            <groupId>com.packtpub.jdbc</groupId>
+            <artifactId>JDBCSampleApp</artifactId>
+            <version>1.0</version>
+            <type>car</type>
+        </moduleId>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.geronimo.configs</groupId>
+                <artifactId>system-database</artifactId>
+                <type>car</type>
+            </dependency>
+        </dependencies>
+    </environment>
+
+    <module>
+        <web>JDBCSample-web-1.0.war</web>
+        <web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+            <context-root>/CustomerInfo</context-root>
+            <resource-ref>
+                <ref-name>jdbc/DataSource</ref-name>
+                <resource-link>DerbyTestPool</resource-link>
+            </resource-ref>
+        </web-app>
+    </module>
+    <module>
+        <java>JDBCSample-client-1.0.jar</java>
+        <application-client xmlns="http://geronimo.apache.org/xml/ns/j2ee/application-client-2.0">
+            <client-environment xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">
+                <moduleId>
+                    <groupId>com.packtpub.jdbc</groupId>
+                    <artifactId>JDBCSample-client</artifactId>
+                    <version>1.0</version>
+                    <type>car</type>
+                </moduleId>
+            </client-environment>
+            <server-environment xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">
+                <moduleId>
+                    <groupId>com.packtpub.jdbc</groupId>
+                    <artifactId>JDBCSample-client-server</artifactId>
+                    <version>1.0</version>
+                    <type>car</type>
+                </moduleId>
+            </server-environment>
+            <resource-ref>
+              <ref-name>jdbc/DataSource</ref-name>
+              <resource-link>DerbyTestPool</resource-link>
+            </resource-ref>
+            <resource>
+                <external-rar xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+                    <dep:groupId>org.tranql</dep:groupId>
+                    <dep:artifactId>tranql-connector-derby-client-local</dep:artifactId>
+                    <dep:type>rar</dep:type>
+                </external-rar>
+                <connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+                    <resourceadapter>
+                        <outbound-resourceadapter>
+                            <connection-definition>
+                                <connectionfactory-interface>javax.sql.DataSource</connectionfactory-interface>
+                                <connectiondefinition-instance>
+                                    <name>DerbyTestPool</name>
+                                    <config-property-setting name="Password">manager</config-property-setting>
+                                    <config-property-setting name="LoginTimeout"/>
+                                    <config-property-setting name="DatabaseName">DerbyTestDB</config-property-setting>
+                                    <config-property-setting name="UserName">system</config-property-setting>
+                                    <connectionmanager>
+                                        <xa-transaction>
+                                            <transaction-caching/>
+                                        </xa-transaction>
+                                        <single-pool>
+                                            <max-size>10</max-size>
+                                            <min-size>0</min-size>
+                                            <blocking-timeout-milliseconds>5000</blocking-timeout-milliseconds>
+                                            <idle-timeout-minutes>15</idle-timeout-minutes>
+                                            <match-one/>
+                                        </single-pool>
+                                    </connectionmanager>
+                                </connectiondefinition-instance>
+                            </connection-definition>
+                        </outbound-resourceadapter>
+                    </resourceadapter>
+                </connector>
+            </resource>
+        </application-client>
+    </module>
+
+    <ext-module>
+        <connector>TradeDataSource</connector>
+        <external-path xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+            <dep:groupId>org.tranql</dep:groupId>
+            <dep:artifactId>tranql-connector-derby-embed-xa</dep:artifactId>
+            <dep:type>rar</dep:type>
+        </external-path>
+        <connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+          <resourceadapter>
+            <outbound-resourceadapter>
+              <connection-definition>
+                <connectionfactory-interface>javax.sql.DataSource</connectionfactory-interface>
+                <connectiondefinition-instance>
+                    <name>DerbyTestPool</name>
+                    <config-property-setting name="Password">manager</config-property-setting>
+                    <config-property-setting name="LoginTimeout"/>
+                    <config-property-setting name="DatabaseName">DerbyTestDB</config-property-setting>
+                    <config-property-setting name="UserName">system</config-property-setting>
+                    <connectionmanager>
+                        <xa-transaction>
+                            <transaction-caching/>
+                        </xa-transaction>
+                        <single-pool>
+                            <max-size>10</max-size>
+                            <min-size>0</min-size>
+                            <blocking-timeout-milliseconds>5000</blocking-timeout-milliseconds>
+                            <idle-timeout-minutes>15</idle-timeout-minutes>
+                            <match-one/>
+                        </single-pool>
+                    </connectionmanager>
+                </connectiondefinition-instance>
+              </connection-definition>
+            </outbound-resourceadapter>
+          </resourceadapter>
+        </connector>
+    </ext-module>
+</application>

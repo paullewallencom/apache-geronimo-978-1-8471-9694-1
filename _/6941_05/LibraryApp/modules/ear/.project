@@ -1,0 +1,11 @@
+<projectDescription>
+  <name>LibraryApp-ear</name>
+  <comment>Library Application EAR</comment>
+  <projects>
+    <project>LibraryApp-client</project>
+    <project>LibraryApp-ejb</project>
+    <project>LibraryApp-web</project>
+  </projects>
+  <buildSpec/>
+  <natures/>
+</projectDescription>
